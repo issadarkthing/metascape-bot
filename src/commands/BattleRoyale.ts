@@ -11,6 +11,7 @@ export default class extends Command {
   description = "fight multiple people at once and last one standing wins";
   aliases = ["br"];
   maxPlayers = 5;
+  disable = true;
   fee = 10;
 
   async exec(msg: Message) {
