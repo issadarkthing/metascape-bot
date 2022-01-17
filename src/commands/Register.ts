@@ -5,17 +5,27 @@ import { bold } from "../utils";
 import { Player } from "../structure/Player";
 
 export default class extends Command {
-  name = "create";
+  name = "register";
   description = "create new character";
 
-  async exec(msg: Message) {
+  async exec(msg: Message, args: string[]) {
 
     if (client.players.has(msg.author.id)) {
       throw new Error("your character has already been created");
     }
 
+    const id = args[0];
 
-    const avatarUrl = msg.author.avatarURL() || msg.author.defaultAvatarURL;
+    if (!id) {
+      throw new Error("no id was provided");
+    }
+
+    const avatarUrl = client.nft.get(id);
+
+    if (!avatarUrl) {
+      throw new Error(`no nft with id "${id}" exists`);
+    }
+
     const player = new Player(msg.author, avatarUrl);
 
     player.save();
