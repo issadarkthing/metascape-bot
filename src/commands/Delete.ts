@@ -4,6 +4,7 @@ import { client } from "..";
 
 export default class extends Command {
   name = "delete";
+  description = "delete a registered nft";
 
   async exec(msg: Message, args: string[]) {
 
