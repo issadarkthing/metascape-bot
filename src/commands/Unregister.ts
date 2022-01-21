@@ -1,4 +1,5 @@
 import { Command } from "@jiman24/commandment";
+import { Player } from "../structure/Player";
 import { Message, PermissionResolvable } from "discord.js";
 import { client } from "..";
 
@@ -12,7 +13,18 @@ export default class extends Command {
     const id = args[0];
 
     if (!id) {
-      throw new Error("no id was provided");
+      const player = Player.fromUser(msg.author);
+      const nft = client.nft.find(x => x.url === player.imageUrl)!;
+
+      delete nft.ownerID;
+      nft.active = false;
+      client.nft.set(nft.id, nft);
+
+      delete player.imageUrl;
+      client.players.set(player.id, player);
+
+      msg.channel.send(`Successfully unregister nft`);
+      return;
     }
 
     const nft = client.nft.get(id);
