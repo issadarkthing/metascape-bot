@@ -10,7 +10,7 @@ export default class extends Command {
   name = "battle-royale";
   description = "fight multiple people at once and last one standing wins";
   aliases = ["br"];
-  maxPlayers = 5;
+  maxPlayers = 15;
   fee = 10;
 
   async exec(msg: Message) {
