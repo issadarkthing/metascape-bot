@@ -22,7 +22,7 @@ export default class extends Command {
       throw new Error(`id "${id}" already exists`);
     }
 
-    client.nft.set(id, image.url);
+    client.nft.set(id, { id, url: image.url, active: false });
     msg.channel.send(`Successfully saved nft`);
   }
 }

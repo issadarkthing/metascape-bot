@@ -28,10 +28,9 @@ export class Player extends PlayerRPG {
   hunt = 0;
   inventory: Item[] = [];
 
-  constructor(user: User, imageUrl: string) {
+  constructor(user: User) {
     super(user);
     this.name = user.username;
-    this.imageUrl = imageUrl;
   }
 
   static fromUser(user: User) {
@@ -42,7 +41,9 @@ export class Player extends PlayerRPG {
       throw new PlayerNotFoundErr("character has not been created");
     }
 
-    const player = new Player(user, data.imageUrl);
+    const player = new Player(user);
+    player.imageUrl = data.imageUrl;
+
     Object.assign(player, data);
 
     const offset = player.level - 1;

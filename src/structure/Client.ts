@@ -5,5 +5,7 @@ import Enmap from "enmap";
 export class Client extends DiscordClient {
   players = new Enmap("Player");
   commandManager = new CommandManager(process.env.PREFIX || "!");
-  nft = new Enmap("nft");
+  nft = new Enmap<string, Nft>("nft");
 }
+
+
