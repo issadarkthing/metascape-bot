@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import { client } from "../index";
 import { bold } from "../utils";
 import { Player } from "../structure/Player";
+import { Nft } from "../structure/Nft";
 
 export default class extends Command {
   name = "register";
@@ -16,12 +17,10 @@ export default class extends Command {
       throw new Error("no id was provided");
     }
 
-    const nft = client.nft.get(id);
+    const nft = Nft.fromID(id);
 
-    if (!nft) {
-      throw new Error(`no nft with id "${id}" exists`);
-    } else if (nft.active) {
-      throw new Error(`nft with id "${id}" is currently in used`);
+    if (nft.ownerID) {
+      throw new Error(`nft "${id}" already owned`);
     }
 
     let player: Player;
@@ -37,19 +36,15 @@ export default class extends Command {
       isNewPlayer = true;
     }
 
-    if (player.imageUrl) {
-      const nft = client.nft.find(x => x.url === player.imageUrl)!;
-
-      throw new Error(`You are currently using nft with id "${nft.id}"`);
+    if (!player.imageUrl) {
+      player.imageUrl = nft.url;
+      nft.active = true;
     }
 
-    player.imageUrl = nft.url;
 
     nft.ownerID = player.user.id;
-    nft.active = true;
 
-    client.nft.set(id, nft);
-
+    nft.save();
     player.save();
 
     const { prefix } = client.commandManager;

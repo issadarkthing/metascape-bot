@@ -2,6 +2,7 @@ import { Command } from "@jiman24/commandment";
 import { Player } from "../structure/Player";
 import { Message, PermissionResolvable } from "discord.js";
 import { client } from "..";
+import { Nft } from "../structure/Nft";
 
 export default class extends Command {
   name = "unregister";
@@ -14,38 +15,52 @@ export default class extends Command {
 
     if (!id) {
       const player = Player.fromUser(msg.author);
-      const nft = client.nft.find(x => x.url === player.imageUrl)!;
 
-      delete nft.ownerID;
-      nft.active = false;
-      client.nft.set(nft.id, nft);
+      const imageUrl = player.imageUrl;
 
-      delete player.imageUrl;
-      client.players.set(player.id, player);
+      if (imageUrl) {
 
-      msg.channel.send(`Successfully unregister nft`);
+        const nft = Nft.findByUrl(imageUrl);
+
+        if (!nft) {
+          throw new Error("cannot find nft");
+        }
+
+        delete nft.ownerID;
+        nft.active = false;
+        nft.save();
+
+        delete player.imageUrl;
+        player.save();
+
+        msg.channel.send(`Successfully unregister nft`);
+
+      } else {
+
+        msg.channel.send(`You currently not using any nft`);
+      }
+
       return;
     }
 
-    const nft = client.nft.get(id);
-
-    if (!nft) {
-      throw new Error(`no nft with id "${id}" exists`);
-    }
+    const nft = Nft.fromID(id);
 
     if (!nft.ownerID) {
       throw new Error(`nft with id "${id}" is already unused`);
     }
 
     const player = client.players.get(nft.ownerID);
-    delete player.imageUrl;
 
-    client.players.set(player.id, player);
+    if (player.imageUrl === nft.url) {
+      delete player.imageUrl;
+      client.players.set(player.id, player);
+    }
+
 
     nft.active = false;
     delete nft.ownerID;
 
-    client.nft.set(nft.id, nft);
+    nft.save();
 
     msg.channel.send(`Successfully unregister nft`);
   }

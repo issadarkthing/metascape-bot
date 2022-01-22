@@ -2,6 +2,7 @@ import { Command } from "@jiman24/commandment";
 import { Message, PermissionResolvable } from "discord.js";
 import { Prompt } from "@jiman24/discordjs-prompt";
 import { client } from "..";
+import { Nft } from "../structure/Nft";
 
 export default class extends Command {
   name = "upload";
@@ -23,7 +24,9 @@ export default class extends Command {
       throw new Error(`id "${id}" already exists`);
     }
 
-    client.nft.set(id, { id, url: image.url, active: false });
+    const nft = new Nft(id, image.url);
+    nft.save();
+
     msg.channel.send(`Successfully saved nft`);
   }
 }
