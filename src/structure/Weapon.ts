@@ -2,16 +2,31 @@ import { Message } from "discord.js";
 import { Weapon as BaseWeapon } from "@jiman24/discordjs-rpg";
 import { Player } from "../structure/Player";
 
-export abstract class Weapon extends BaseWeapon {
-  abstract price: number;
+interface WeaponData {
+  id: string;
+  name: string;
+  attack: number;
+  price: number;
+  imageUrl: string;
+}
+
+export class Weapon extends BaseWeapon {
+  id: string;
+  name: string;
+  attack: number;
+  price: number;
+
+  constructor(data: WeaponData) {
+    super();
+    this.id = data.id;
+    this.price = data.price;
+    this.name = data.name;
+    this.attack = data.attack;
+    this.imageUrl = data.imageUrl;
+  }
 
   static get all(): Weapon[] {
-    return [
-      new Axe(),
-      new Sword(),
-      new Dagger(),
-      new Mace(),
-    ];
+    return data.map(x => new Weapon(x));
   }
 
   async buy(msg: Message) {
@@ -39,38 +54,118 @@ export abstract class Weapon extends BaseWeapon {
   }
 }
 
+const data = [
+  {
+    id: "sparkle_sword",
+    name: "Sparkle Sword",
+    attack: 20,
+    price: 1000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380022225666140/1.png",
+  },
+  {
+    id: "ice_sword",
+    name: "Ice Sword",
+    attack: 30,
+    price: 2000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380025430126592/2.png",
+  },
+  {
+    id: "void_sword",
+    name: "Void Sword",
+    attack: 40,
+    price: 3000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380025077796954/3.png",
+  },
+  {
+    id: "sun_sword",
+    name: "Sun Sword",
+    attack: 50,
+    price: 4000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380024733876294/4.png",
+  },
+  {
+    id: "moon_sword",
+    name: "Moon Sword",
+    attack: 60,
+    price: 5000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380024402538567/5.png",
+  },
+  {
+    id: "galactic_sword",
+    name: "Galactic Sword",
+    attack: 70,
+    price: 6000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380024079552532/6.png",
+  },
+  {
+    id: "dark_sword",
+    name: "Dark Sword",
+    attack: 80,
+    price: 7000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380023874060318/7.png",
+  },
+  {
+    id: "majestic_sword",
+    name: "Majestic Sword",
+    attack: 90,
+    price: 8000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380023517528134/8.png",
+  },
+  {
+    id: "blue_sword",
+    name: "Blue Sword",
+    attack: 100,
+    price: 9000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380023307800647/9.png",
+  },
+  {
+    id: "extended_sword",
+    name: "Extended Sword",
+    attack: 110,
+    price: 10000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380022661906442/10.png",
+  },
+  {
+    id: "mystery_sword",
+    name: "Mystery Sword",
+    attack: 120,
+    price: 11000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380105583276102/11.png",
+  },
+  {
+    id: "red_dragon_sword",
+    name: "Red Dragon Sword",
+    attack: 130,
+    price: 12000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380105352609832/12.png",
+  },
+  {
+    id: "black_dragon_sword",
+    name: "Black Dragon Sword",
+    attack: 140,
+    price: 13000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380105168031794/13.png",
+  },
+  {
+    id: "metal_sword",
+    name: "Metal Sword",
+    attack: 150,
+    price: 14000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380104933167144/14.png",
+  },
+  {
+    id: "golden_snake_sword",
+    name: "Golden Snake Sword",
+    attack: 160,
+    price: 15000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380104736022548/15.png",
+  },
+  {
+    id: "mischief_sword",
+    name: "Mischief Sword",
+    attack: 170,
+    price: 16000,
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/935380095382732842/16.png",
+  },
+]
 
-class Axe extends Weapon {
-  id = "axe";
-  name = "Axe";
-  attack = 20;
-  price = 1000;
-}
-
-class Sword extends Weapon {
-  id = "sword";
-  name = "Sword";
-  attack = 30;
-  price = 2000;
-}
-
-class Dagger extends Weapon {
-  id = "dagger";
-  name = "Dagger";
-  attack = 40;
-  price = 3000;
-}
-
-class Mace extends Weapon {
-  id = "mace";
-  name = "Mace";
-  attack = 45;
-  price = 3500;
-}
-
-class Blaster extends Weapon {
-  id = "blaster";
-  name = "Blaster";
-  attack = 50;
-  price = 4000;
-}
