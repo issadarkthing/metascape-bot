@@ -2,16 +2,34 @@ import { Message } from "discord.js";
 import { Pet as BasePet } from "@jiman24/discordjs-rpg";
 import { Player } from "./Player";
 
-export abstract class Pet extends BasePet {
-  abstract price: number;
+interface PetData {
+  id: string;
+  name: string;
+  interceptRate: number;
+  attack: number;
+  price: number;
+  imageUrl: string;
+}
+
+export class Pet extends BasePet {
+  id: string;
+  name: string;
+  interceptRate: number;
+  attack: number;
+  price: number;
+
+  constructor(data: PetData) {
+    super();
+    this.id = data.id;
+    this.name = data.name;
+    this.interceptRate = data.interceptRate;
+    this.attack = data.attack;
+    this.price = data.price;
+    this.imageUrl = data.imageUrl;
+  }
 
   static get all(): Pet[] {
-    return [
-      new Blob(),
-      new Slime(),
-      new Phoenix(),
-      new Titanoboa(),
-    ];
+    return data.map(x => new Pet(x));
   }
 
   async buy(msg: Message) {
@@ -36,58 +54,46 @@ export abstract class Pet extends BasePet {
   }
 }
 
-export class Blob extends Pet {
-  name = "Blob";
-  id = "blob";
-  attack = 20;
-  price = 13000;
-}
-
-export class Slime extends Pet {
-  name = "Slime";
-  id = "slime";
-  attack = 15;
-  interceptRate = 0.2;
-  price = 15000;
-}
-
-export class Phoenix extends Pet {
-  name = "Phoenix";
-  id = "phoenix";
-  attack = 15;
-  interceptRate = 0.2;
-  price = 15000;
-}
-
-export class Titanoboa extends Pet {
-  name = "Titan-o-boa";
-  id = "titan-o-boa";
-  attack = 5;
-  interceptRate = 0.4;
-  price = 30000;
-}
-
-export class BeardedDragon extends Pet {
-  name = "Bearded Dragon";
-  id = "bearded-dragon";
-  attack = 60;
-  interceptRate = 0.1;
-  price = 70000;
-}
-
-export class BabyDragon extends Pet {
-  name = "Baby Dragon";
-  id = "baby-dragon";
-  attack = 20;
-  interceptRate = 0.2;
-  price = 55000;
-}
-
-export class Dog extends Pet {
-  name = "Dog";
-  id = "dog";
-  attack = 10;
-  interceptRate = 0.35;
-  price = 60000;
-}
+const data = [
+  {
+    id: "pig",
+    name: "Pig",
+    price: 5000,
+    interceptRate: 0.1,
+    attack: 20,
+    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734310334495/pig.png",
+  },
+  {
+    id: "slime",
+    name: "Slime",
+    price: 6000,
+    interceptRate: 0.12,
+    attack: 30,
+    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734591340575/slime.png",
+  },
+  {
+    id: "bat",
+    name: "Bat",
+    price: 7000,
+    interceptRate: 0.14,
+    attack: 40,
+    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734780076082/bat.png",
+  },
+  {
+    id: "rhino",
+    name: "Rhino",
+    price: 8000,
+    interceptRate: 0.16,
+    attack: 50,
+    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734977212466/rhino.png",
+  },
+  {
+    id: "golem",
+    name: "Golem",
+    price: 9000,
+    interceptRate: 0.18,
+    attack: 60,
+    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390735216304138/golem.png",
+  },
+]
 
