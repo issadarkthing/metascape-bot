@@ -61,7 +61,7 @@ const data = [
     price: 5000,
     interceptRate: 0.1,
     attack: 20,
-    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734310334495/pig.png",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/936080209776635914/pig.png",
   },
   {
     id: "slime",
@@ -69,7 +69,7 @@ const data = [
     price: 6000,
     interceptRate: 0.12,
     attack: 30,
-    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734591340575/slime.png",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/936080209051009055/slime.png",
   },
   {
     id: "bat",
@@ -77,7 +77,7 @@ const data = [
     price: 7000,
     interceptRate: 0.14,
     attack: 40,
-    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734780076082/bat.png",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/936080210577752144/bat.png",
   },
   {
     id: "rhino",
@@ -85,7 +85,7 @@ const data = [
     price: 8000,
     interceptRate: 0.16,
     attack: 50,
-    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390734977212466/rhino.png",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/936080209373974589/rhino.png",
   },
   {
     id: "golem",
@@ -93,7 +93,7 @@ const data = [
     price: 9000,
     interceptRate: 0.18,
     attack: 60,
-    imageUrl: "https://cdn.discordapp.com/attachments/921236230220447835/935390735216304138/golem.png",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/936080210196041828/golem.png",
   },
 ]
 
