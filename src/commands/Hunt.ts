@@ -59,7 +59,13 @@ export default class extends Command {
         if (currLevel !== player.level) {
           msg.channel.send(`${player.name} is now on level ${bold(player.level)}!`);
         }
-      } 
+
+      } else {
+
+        const lostCoins = random.integer(30, 110);
+        msg.channel.send(`${player.name} lost ${lostCoins} ${currency}`);
+
+      }
 
       player.save();
       this.release(player.id);
