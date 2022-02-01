@@ -90,3 +90,8 @@ export function remove<T>(item: T, arr: T[], count = 1) {
 export function formatPercent(num: number) {
   return `${(num * 100).toFixed(2)}%`
 }
+
+
+export function createSeed(id: string) {
+  return id.split("").map(x => x.charCodeAt(0));
+}

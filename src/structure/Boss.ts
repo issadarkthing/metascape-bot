@@ -1,18 +1,42 @@
 import { Fighter } from "@jiman24/discordjs-rpg";
-import { currency } from "../utils";
-import { Defense, Heal, Rage } from "../structure/Skill";
+import { createSeed, currency } from "../utils";
+import { Skill } from "../structure/Skill";
 import { Pet } from "./Pet";
+import { MersenneTwister19937 as Engine, Random } from "random-js";
 
-export abstract class Boss extends Fighter {
-  abstract drop: number;
-  abstract xpDrop: number;
+export class Boss extends Fighter {
+  drop: number;
+  xpDrop: number;
+  level: number;
 
   static get all(): Boss[] {
-    return [
-      new Cavernmonster("Manzana Banana"),
-      new Vortexscreamer("Burro Banana"),
-      new Rottingseeker("Barangan Banana"),
-    ];
+    return data.map(x => new Boss(x));
+  }
+
+  constructor(monsterData: { name: string, imageUrl: string }) {
+    super(monsterData.name);
+    this.imageUrl = monsterData.imageUrl;
+    this.level = data.findIndex(x => x.name === monsterData.name) + 1;
+
+    const random = new Random(
+      Engine.seedWithArray(createSeed(monsterData.name))
+    );
+
+    this.drop = random.integer(300 * this.level, 1000 * this.level);
+    this.xpDrop = random.integer(100 * this.level, 150 * this.level);
+
+    const offset = this.level;
+    this.hp += offset * 100;
+    this.attack += offset * 10;
+    this.critDamage += offset * 0.10;
+    this.armor = (random.integer(10, 10 + this.level)) / 100;
+    this.critChance = (random.integer(20, 20 + this.level)) / 100;
+
+    const skill = random.pick(Skill.all);
+    skill.setOwner(this);
+
+    const pet = random.pick(Pet.all);
+    pet.setOwner(this);
   }
 
   show() {
@@ -25,66 +49,46 @@ export abstract class Boss extends Fighter {
   }
 }
 
-export class Cavernmonster extends Boss {
-  drop = 12000;
-  xpDrop = 500;
-  attack = 500;
-  hp = 550;
-  armor = 0.3;
-  critChance = 0.1;
-  critDamage = 3;
-  imageUrl = "https://www.runehq.com/image/monsterdb/v/vanstromklause.png";
-  
-  constructor(name: string) {
-    super(name);
 
-    const skill = new Heal(); 
-    skill.setOwner(this);
-
-    const pet = Pet.all[0];
-    pet.setOwner(this);
-  }
-}
-
-export class Vortexscreamer extends Boss {
-  drop = 24000;
-  xpDrop = 800;
-  attack = 1200;
-  hp = 1420;
-  armor = 0.35;
-  critChance = 0.2;
-  critDamage = 3.4;
-  imageUrl = "https://www.runehq.com/image/monsterdb/k/kriltsutsaroth.png"
-
-  constructor(name: string) {
-    super(name);
-
-    const skill = new Rage(); 
-    skill.setOwner(this);
-
-    const pet = Pet.all[1];
-    pet.setOwner(this);
-  }
-}
-
-export class Rottingseeker extends Boss {
-  drop = 35000;
-  xpDrop = 1000;
-  attack = 2350;
-  hp = 2570;
-  armor = 0.39;
-  critChance = 0.2;
-  critDamage = 3.8;
-  imageUrl = "https://www.runehq.com/image/monsterdb/k/kreearra.png";
-
-  constructor(name: string) {
-    super(name);
-
-    const skill = new Defense(); 
-    skill.setOwner(this);
-
-    const pet = Pet.all[2];
-    pet.setOwner(this);
-  }
-}
-
+const data = [
+  {
+    name: "Octorock",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937942493255843900/Octorock.png",
+  },
+  {
+    name: "Octoslime",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937942493469757460/Octoslime.png",
+  },
+  {
+    name: "Octowater",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937942493864030258/Octowater.png",
+  },
+  {
+    name: "Octofire",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937942494170189844/Octofire.png",
+  },
+  {
+    name: "SkeloKnight",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937941591400783902/SkeloKnight.png",
+  },
+  {
+    name: "Paladin",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937941590377385984/Paladin.png",
+  },
+  {
+    name: "Red Paladin",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937941590645833728/Red_Paladin.png",
+  },
+  {
+    name: "Molten Bird King",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937941413734273054/Molten_Bird_King.png",
+  },
+  {
+    name: "Demon King",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937940875596689408/Demon_King.png",
+  },
+  {
+    name: "Dagger Soldier",
+    imageUrl: "https://cdn.discordapp.com/attachments/933174369637777448/937942077663240252/Dagger_Soldier.png",
+  },
+];
