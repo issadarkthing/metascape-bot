@@ -15,6 +15,7 @@ export class Player extends PlayerRPG {
   xp = 0;
   win = 0;
   hunt = 0;
+  bossKills = 0;
   inventory: Item[] = [];
 
   constructor(user: User) {
@@ -113,6 +114,8 @@ export class Player extends PlayerRPG {
     const winHuntPercent = (this.win / this.hunt) || 0;
     const winHuntStr = (winHuntPercent * 100).toFixed(2) + "%";
     profile.addField("Win/Hunt %", code(winHuntStr), true);
+
+    profile.addField("Boss Kills", code(this.bossKills), true);
 
     profile.addField("Level", code(this.level), true);
     profile.addField("xp", `\`${this.xp}/${this.requiredXP()}\``, true);
