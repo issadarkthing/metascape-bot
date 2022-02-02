@@ -11,8 +11,8 @@ export default class extends Command {
   async exec(msg: Message) {
 
     const player = client.players.array()
-      .sort((a, b) => b.brWins - a.brWins)
-      .map((x, i) => `${i + 1}. ${x.name} \`${x.brWins}\``)
+      .sort((a, b) => (b.brWins || 0) - (a.brWins || 0))
+      .map((x, i) => `${i + 1}. ${x.name} \`${x.brWins || 0}\``)
       .slice(0, 10)
       .join("\n");
 
