@@ -26,7 +26,7 @@ export class Boss extends Fighter {
     this.xpDrop = random.integer(100 * this.level, 150 * this.level);
 
     const offset = this.level;
-    this.hp += offset * 100;
+    this.hp += offset * 2000;
     this.attack += offset * 10;
     this.critDamage += offset * 0.10;
     this.armor = (random.integer(10, 10 + this.level)) / 100;
