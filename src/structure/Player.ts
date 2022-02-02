@@ -16,6 +16,8 @@ export class Player extends PlayerRPG {
   win = 0;
   hunt = 0;
   bossKills = 0;
+  brWins = 0;
+  duelWins = 0;
   inventory: Item[] = [];
 
   constructor(user: User) {

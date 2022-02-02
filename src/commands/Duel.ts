@@ -63,6 +63,7 @@ export default class extends Command {
     const winner = (await battle.run()) as Player;
     const loser = player.id === winner.id ? opponent : player;
 
+    winner.duelWins++;
     winner.coins += amount * 2;
 
     winner.save();

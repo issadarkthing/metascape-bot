@@ -65,6 +65,7 @@ export default class extends Command {
     const reward = this.fee * players.length;
 
     winner.coins += reward;
+    winner.brWins++;
     winner.save();
 
     msg.channel.send(
