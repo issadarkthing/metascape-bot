@@ -63,6 +63,11 @@ export default class extends Command {
       } else {
 
         const lostCoins = random.integer(30, 110);
+        const coinsLeft = player.coins - lostCoins;
+
+        player.coins = coinsLeft > 0 ? coinsLeft : 0;
+        player.save();
+
         msg.channel.send(`${player.name} lost ${lostCoins} ${currency}`);
 
       }
