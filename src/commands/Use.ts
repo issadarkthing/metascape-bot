@@ -46,7 +46,7 @@ export default class extends Command {
     player.save();
     nft.save();
 
-    msg.channel.send(`Successfully changed pfp`);
+    msg.channel.send(`Successfully changed character`);
   }
 }
 
